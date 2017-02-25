@@ -1,0 +1,60 @@
+.fluttable table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    
+}
+.fluttable td,
+.fluttable th{
+    border: 1px solid #ccc;
+    padding: 8px 5px;
+    word-wrap: break-word;
+}
+.fluttable tbody tr:hover {
+    background-color: #E6E5FF;
+}
+.fluttable thead th {
+    text-align: center;
+    color: #1f1f1f;
+}
+/*PAGINATION*/
+.fluttable ul.pagination {
+    list-style-type: none;    
+    padding-left: 0;
+}
+
+.fluttable ul.pagination li {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    margin-right: -1px;
+    
+    -webkit-transition: background-color 0.5s ease-out 0.1s;
+    -moz-transition: background-color 0.5s ease-out 0.1s;
+    -o-transition: background-color 0.5s ease-out 0.1s;
+    transition: background-color 0.5s ease-out 0.1s;
+}
+
+.fluttable ul.pagination li.active {
+    background-color: #407ae0;
+    color: #fff;
+    border: 1px solid #000;
+    position: relative;
+    z-index: 2;
+}
+
+.fluttable ul.pagination li:hover {
+    background-color: #80a4e4;
+}
+
+.fluttable .search {
+    margin-bottom: 10px;
+    float: right;
+    padding-left: 27px;
+    background: url(https://www.w3schools.com/css/searchicon.png) no-repeat 2px 2px;
+    height: 24px;
+    font-size: 15px;
+    font-family: sans-serif;
+    border: 1px solid #ccc;
+}
+

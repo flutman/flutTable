@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>flutTable jQuery plugin</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href="/css/jquery.fluttable.css">
+</head>
+<body>
+<div id="myFlutTable"></div>
+
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.fluttable.js"></script>
+<script>
+$(function() {
+    $("#myFlutTable").flutTable({
+        tableTitle: "Контакты",
+        columnName: ["№","Имя","Номер"],
+        urlData: "/tbl_data.json",
+        pagination: 2,
+        search: true
+    });
+
+});
+</script>
+</body>
+</html>
