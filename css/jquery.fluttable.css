@@ -1,3 +1,6 @@
+/*@import url("../js/Font-Awesome/css/font-awesome.css");*/
+@import url("font-awesome.min.css");
+
 .fluttable table {
     border-collapse: collapse;
     width: 100%;
@@ -10,6 +13,12 @@
     padding: 8px 5px;
     word-wrap: break-word;
 }
+
+.fluttable th.enumerate{
+    width: 100px;
+    box-sizing: border-box;
+}
+
 .fluttable tbody tr:hover {
     background-color: #E6E5FF;
 }
@@ -17,6 +26,19 @@
     text-align: center;
     color: #1f1f1f;
 }
+/*OPTION*/
+.fluttable .section_navOpt>div{
+    display: inline-block;
+}
+.fluttable .divOpt{
+    float: right;
+    margin-top: 16px;
+}
+
+.fluttable .divOpt>div{
+    display: inline-block;
+}
+
 /*PAGINATION*/
 .fluttable ul.pagination {
     list-style-type: none;    

@@ -2,12 +2,17 @@
 ;(function($) {
 //значения по умолчанию
     var defaults = {
+        tblName: "flutTbl",
         tableTitle : "Название таблицы",
         url: "",
         columnName: ["#","Имя","Телефон"],
         containerClass: "fluttable",
         pagination: 0,
         search: false,
+        hasTitle: false,
+        hasEnumerate: false,
+//        optEdit: ["edit","delete"],
+        optEdit: [],
         lng: "ru"
     };
     
@@ -33,59 +38,92 @@
     Fluttable.prototype.init = function(){
         this.element.addClass(this.config.containerClass);
         
-//        var tbl;
         var container = this.element;
+        var hasTitle = this.config.hasTitle;
+        var optEdit = this.config.optEdit;
+        var hasEnumerate = this.config.hasEnumerate;
         
-        $("<h1/>",{
-            text: this.config.tableTitle
-        }).appendTo(this.element);
+        if (hasTitle) {
+            $("<h1/>",{
+                text: this.config.tableTitle
+            }).appendTo(this.element);
+        }
         
         var table = $("<table/>",{
-            id: "flutTbl"
+            class: this.config.tblName
         }).appendTo(this.element);
 
-//        создание шапки таблицы
+//        CREATE TABLE HEAD
         var thead = $("<thead/>").appendTo(table);
         var tr = $("<tr/>").appendTo(thead);
         var x,y;
+//        ENUMERATE
+        if (hasEnumerate) $("<th/>",{
+            class: "enumerate",
+            text: "#"
+        }).appendTo(tr);
+        
         for (x = 0, y = this.config.columnName.length; x < y; x++) {
             $("<th/>",{
                 text: this.config.columnName[x],
             }).appendTo(tr);
         }
 
-//      создание тела таблицы
+//      CREATE TABLE BODY
         var tbody = $("<tbody/>").appendTo(table);
-//        console.log("tbl_ins body "+table.html());
+        var intEnum = 0;
         var takeData = $.getJSON(this.config.urlData,function(data){
             $.each(data,function(key,value) {
-            tr = $("<tr/>").appendTo(tbody);
-                $.each(value,function(index,txt) {
-                    $("<td/>",{
-                        "class": index,
-                        text: txt
-                    }).appendTo(tr);
-                });
+                tr = $("<tr/>").appendTo(tbody);
+                    if (hasEnumerate) $("<td/>",{text: ++intEnum}).appendTo(tr);
+                    $.each(value,function(index,txt) {
+                        $("<td/>",{
+                            "class": index,
+                            text: txt
+                        }).appendTo(tr);
+                    });
             });
         }); 
 
 var widget = this.config;
 var pagination = this.config.pagination; 
 var search = this.config.search;
+        
+var divNavOpt = $("<div/>",{
+    class: "section_navOpt"
+}).appendTo(container);        
 //  получаем список полную таблицу
     takeData.complete(function(data){
-//      PAGINATION
+//      CREATE_PAGINATION
         if (pagination != 0 ) {
 //            генерация блока пагинации
-            $("<div class='pagination-container'><nav><ul class='pagination'></ul></nav></div>").appendTo(container);
+            $("<div class='pagination-container'><nav><ul class='pagination'></ul></nav></div>").appendTo(divNavOpt);
             
             var totalRows = table.find("tbody tr").length;
             createPagination(totalRows,table,pagination,$(".pagination"),false);
             
-        } //end PAGINATION
-        
-
+        } //end CREATE_PAGINATION
     });
+        
+//    CREATE DIVEDIT
+        var divOpt = $("<div/>",{
+            class: "divOpt"
+        }).appendTo(divNavOpt);
+        for (x = 0, y = optEdit.length; x < y; x++) {
+            switch(optEdit[x]){
+                case 'edit':
+                    $("<div/>",{
+                        html: "<i class='fa fa-times fa-2x'></i>",
+                    }).appendTo(divOpt);
+                    break;
+                case 'delete':
+                    $("<div/>",{
+                        html: "<i class='fa fa-pencil-square-o fa-2x'></i>",
+                    }).appendTo(divOpt);
+                    break;
+                    
+            }
+        }
         
 
 //        SEARCH
@@ -143,7 +181,7 @@ var search = this.config.search;
        });
     }
     
-//пагинация
+//PAGINATION
     function createPagination(colRows,tbl,pagRows,pagBlock,filter){
         pagBlock.html("");
         if (filter == undefined) filter = false;
@@ -184,6 +222,7 @@ var search = this.config.search;
             });
         });
     }
+//    END PAGINATION
 
 //    поиск полного совпадения
     function fullMatch(match,tbl){
