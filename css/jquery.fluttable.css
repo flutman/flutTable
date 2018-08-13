@@ -35,6 +35,10 @@
     margin-top: 16px;
 }
 
+.fluttable .rowChecked{
+    background-color: #3cd083;
+}
+
 .fluttable .divOpt>div{
     display: inline-block;
 }

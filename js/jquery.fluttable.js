@@ -5,13 +5,13 @@
         tblName: "flutTbl",
         tableTitle : "Название таблицы",
         url: "",
-        columnName: ["#","Имя","Телефон"],
+        columnName: [],
         containerClass: "fluttable",
         pagination: 0,
         search: false,
         hasTitle: false,
         hasEnumerate: false,
-//        optEdit: ["edit","delete"],
+        hasCheckable: false,
         optEdit: [],
         lng: "ru"
     };
@@ -42,6 +42,10 @@
         var hasTitle = this.config.hasTitle;
         var optEdit = this.config.optEdit;
         var hasEnumerate = this.config.hasEnumerate;
+        var hasCheckable = this.config.hasCheckable;
+        var tablaHeadText = this.config.columnName;
+        
+        console.log(tablaHeadText);
         
         if (hasTitle) {
             $("<h1/>",{
@@ -77,10 +81,15 @@
                 tr = $("<tr/>").appendTo(tbody);
                     if (hasEnumerate) $("<td/>",{text: ++intEnum}).appendTo(tr);
                     $.each(value,function(index,txt) {
-                        $("<td/>",{
-                            "class": index,
-                            text: txt
-                        }).appendTo(tr);
+                        if (index != "id") {
+                            $("<td/>",{
+                                "class": index,
+                                text: txt
+                            }).appendTo(tr);
+                        } else {
+                            tr.attr("date-rowid",txt);
+                        }
+                        
                     });
             });
         }); 
@@ -103,6 +112,10 @@ var divNavOpt = $("<div/>",{
             createPagination(totalRows,table,pagination,$(".pagination"),false);
             
         } //end CREATE_PAGINATION
+        
+//CREATE CHECABLE
+        if (hasCheckable) rowCheck(table);
+        
     });
         
 //    CREATE DIVEDIT
@@ -123,6 +136,11 @@ var divNavOpt = $("<div/>",{
                     break;
                     
             }
+        }
+
+ 
+        if (hasCheckable){
+
         }
         
 
@@ -154,6 +172,8 @@ var divNavOpt = $("<div/>",{
         } 
 //end SEARCH
         
+
+        
         
 //        this.element.trigger("created.flutTable");
     }//конец прототипа
@@ -179,6 +199,18 @@ var divNavOpt = $("<div/>",{
                 }
             });
        });
+    }
+
+//ОТМЕТКА СТРОК
+    function rowCheck(tbl){
+            tbl.find("tbody tr").on("click",function(){
+                if ($(this).hasClass("rowChecked")){
+                    $(this).removeClass("rowChecked");
+                } else {
+
+                    $(this).addClass("rowChecked");
+                }       
+            });
     }
     
 //PAGINATION

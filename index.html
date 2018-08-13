@@ -15,11 +15,12 @@
 $(function() {
     $("#myFlutTable").flutTable({
         tableTitle: "Контакты",
-        columnName: ["№","Имя","Номер"],
+        columnName: ["Имя","Номер"],
         urlData: "data.json",
         pagination: 2,
         search: true,
         hasTitle: true,
+        hasCheckable: true,
         optEdit: ["delete","edit"],
         hasEnumerate: true
     });
